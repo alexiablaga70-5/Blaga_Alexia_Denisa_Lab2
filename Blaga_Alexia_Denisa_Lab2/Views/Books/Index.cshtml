@@ -34,13 +34,17 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author)
+                <td>
+                    @(item.Author != null
+                                    ? item.Author.FirstName + " " + item.Author.LastName
+                                    : "-")
+                </td>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Genre.ID)
+                @(item.Genre?.Name??"-")
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
