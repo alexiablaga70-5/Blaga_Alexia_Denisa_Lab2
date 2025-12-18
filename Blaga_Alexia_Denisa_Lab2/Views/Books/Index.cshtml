@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Blaga_Alexia_Denisa_Lab2.Models.Book>
+﻿@model IEnumerable<Blaga_Alexia_Denisa_Lab2.Models.BookViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,6 +9,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by title: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -16,42 +25,32 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Author)
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+
                 <td>
-                    @(item.Author != null
-                                    ? item.Author.FirstName + " " + item.Author.LastName
-                                    : "-")
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @(item.Genre?.Name??"-")
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+            </tr>
 }
     </tbody>
 </table>
