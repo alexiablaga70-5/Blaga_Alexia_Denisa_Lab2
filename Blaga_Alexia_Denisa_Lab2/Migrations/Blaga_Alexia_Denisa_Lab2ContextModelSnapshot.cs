@@ -22,6 +22,27 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Blaga_Alexia_Denisa_Lab2.Models.Author", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("Blaga_Alexia_Denisa_Lab2.Models.Book", b =>
                 {
                     b.Property<int>("ID")
@@ -30,9 +51,8 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AuthorID")
+                        .HasColumnType("int");
 
                     b.Property<int?>("GenreID")
                         .HasColumnType("int");
@@ -45,6 +65,8 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AuthorID");
 
                     b.HasIndex("GenreID");
 
@@ -117,9 +139,17 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
 
             modelBuilder.Entity("Blaga_Alexia_Denisa_Lab2.Models.Book", b =>
                 {
+                    b.HasOne("Blaga_Alexia_Denisa_Lab2.Models.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Blaga_Alexia_Denisa_Lab2.Models.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreID");
+
+                    b.Navigation("Author");
 
                     b.Navigation("Genre");
                 });
@@ -137,6 +167,11 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Blaga_Alexia_Denisa_Lab2.Models.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Blaga_Alexia_Denisa_Lab2.Models.Book", b =>

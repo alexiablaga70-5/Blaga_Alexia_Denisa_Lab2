@@ -12,6 +12,20 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Authors",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Authors", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customer",
                 columns: table => new
                 {
@@ -46,13 +60,19 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuthorID = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     GenreID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Book", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Book_Authors_AuthorID",
+                        column: x => x.AuthorID,
+                        principalTable: "Authors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Book_Genre_GenreID",
                         column: x => x.GenreID,
@@ -85,6 +105,11 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Book_AuthorID",
+                table: "Book",
+                column: "AuthorID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Book_GenreID",
                 table: "Book",
                 column: "GenreID");
@@ -111,6 +136,9 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customer");
+
+            migrationBuilder.DropTable(
+                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "Genre");
