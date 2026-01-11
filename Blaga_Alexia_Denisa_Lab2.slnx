@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Blaga_Alexia_Denisa_Lab2/Blaga_Alexia_Denisa_Lab2.csproj" />
+  <Project Path="GrpcCustomersService/GrpcCustomersService.csproj" Id="4c8e92d2-435e-4957-83f3-44497eb37162" />
 </Solution>
