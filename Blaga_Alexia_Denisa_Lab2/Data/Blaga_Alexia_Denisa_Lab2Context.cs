@@ -17,6 +17,5 @@ namespace Blaga_Alexia_Denisa_Lab2.Data
         public DbSet<Blaga_Alexia_Denisa_Lab2.Models.Customer> Customer { get; set; } = default!;
         public DbSet<Blaga_Alexia_Denisa_Lab2.Models.Genre> Genre { get; set; } = default!;
         public DbSet<Author> Authors { get; set; } = default!;
-        public DbSet<Order> Orders { get; set; } = default!;
     }
 }

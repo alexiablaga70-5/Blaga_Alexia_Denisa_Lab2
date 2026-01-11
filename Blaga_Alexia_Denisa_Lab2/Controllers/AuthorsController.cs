@@ -34,8 +34,6 @@ namespace Blaga_Alexia_Denisa_Lab2.Controllers
             }
 
             var author = await _context.Authors
-                .Include(a => a.Books)
-                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (author == null)
             {

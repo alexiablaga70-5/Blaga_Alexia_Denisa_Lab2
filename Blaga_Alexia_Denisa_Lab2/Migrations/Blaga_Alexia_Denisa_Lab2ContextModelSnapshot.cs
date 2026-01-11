@@ -128,9 +128,6 @@ namespace Blaga_Alexia_Denisa_Lab2.Migrations
                     b.Property<int?>("CustomerID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("OrderID");
 
                     b.HasIndex("BookID");
